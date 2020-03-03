@@ -7,11 +7,15 @@ import "./styles.css";
 export default function App() {
   const l1 = useLoremIpsum();
   const l2 = useLoremIpsum(3);
+  const l3 = useLoremIpsum(2);
   return (
     <div className="App">
       <h1>Hello CodeSandbox</h1>
       <h2>Start editing to see some magic happen!</h2>
       <div>
+        <TruncateContent lines={3} lineHeight={24}>
+          <div>{l1}</div>
+        </TruncateContent>
         <TruncateContent lines={3} lineHeight={24}>
           <div>
             <span>{l2}</span>
