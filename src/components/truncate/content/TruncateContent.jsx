@@ -13,14 +13,15 @@ export class TruncateContent extends Component {
   }
 
   componentDidMount() {
-    if (this.state.shouldTruncate !== this.shouldTruncate()) {
-      this.setState(prevState => ({
-        shouldTruncate: this.shouldTruncate()
-      }));
-    }
+    this.updateTruncateState();
+    window.addEventListener("resize", this.updateTruncateState.bind(this));
   }
 
   componentDidUpdate() {
+    this.updateTruncateState();
+  }
+
+  updateTruncateState() {
     if (this.state.shouldTruncate !== this.shouldTruncate()) {
       this.setState(prevState => ({
         shouldTruncate: this.shouldTruncate()
