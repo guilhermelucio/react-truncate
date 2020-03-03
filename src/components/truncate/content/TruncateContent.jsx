@@ -7,20 +7,25 @@ export class TruncateContent extends Component {
     super(props);
     this.myRef = createRef();
     this.state = {
-      shouldTruncate: true
+      isTruncated: true,
+      shouldTruncate: null
     };
   }
 
   componentDidMount() {
-    this.shouldTruncate();
+    if (this.state.shouldTruncate !== this.shouldTruncate()) {
+      this.setState(prevState => ({
+        shouldTruncate: this.shouldTruncate()
+      }));
+    }
   }
 
   componentDidUpdate() {
-    this.shouldTruncate();
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
+    if (this.state.shouldTruncate !== this.shouldTruncate()) {
+      this.setState(prevState => ({
+        shouldTruncate: this.shouldTruncate()
+      }));
+    }
   }
 
   shouldTruncate = () => {
@@ -40,12 +45,13 @@ export class TruncateContent extends Component {
 
   getCSSProperties = () => {
     const { lineHeight, lines } = this.props;
-    const { shouldTruncate } = this.state;
+    const { isTruncated, shouldTruncate } = this.state;
+
     const baseStyles = {
       lineHeight: `${lineHeight}px`
     };
 
-    if (shouldTruncate) {
+    if (isTruncated && shouldTruncate) {
       return {
         ...baseStyles,
         maxHeight: `${lineHeight * lines}px`
@@ -58,6 +64,8 @@ export class TruncateContent extends Component {
   render() {
     const { children } = this.props;
     const style = this.getCSSProperties();
+    const { shouldTruncate } = this.state;
+    console.log(style);
 
     return (
       <div className="Truncate-Content">
@@ -68,15 +76,17 @@ export class TruncateContent extends Component {
             });
           })}
         </div>
-        <div>
-          <button
-            onClick={() =>
-              this.setState({ shouldTruncate: !this.state.shouldTruncate })
-            }
-          >
-            Click me
-          </button>
-        </div>
+        {shouldTruncate && (
+          <div>
+            <button
+              onClick={() =>
+                this.setState({ isTruncated: !this.state.isTruncated })
+              }
+            >
+              Click me
+            </button>
+          </div>
+        )}
       </div>
     );
   }

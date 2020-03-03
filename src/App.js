@@ -1,5 +1,6 @@
 import React from "react";
 import { TruncateContent } from "./components/truncate/content/TruncateContent";
+import { TruncateLine } from "./components/truncate/line/TruncateLine";
 import { useLoremIpsum } from "./hooks/useLoremIpsum";
 import "./styles.css";
 
@@ -19,6 +20,12 @@ export default function App() {
             </a>
           </div>
         </TruncateContent>
+        <div>
+          <TruncateLine content={l1} maxWidth="500px" />
+        </div>
+        <div>
+          <TruncateLine content={l1} maxWidth="500px" />
+        </div>
       </div>
     </div>
   );
